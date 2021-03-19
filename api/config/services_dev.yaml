@@ -1,0 +1,2 @@
+services:
+    App\Taiga\V1\TaigaInterface: '@App\Taiga\V1\MockTaiga'

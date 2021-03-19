@@ -1,0 +1,62 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+            - '../src/Tests/'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: '../src/Controller/'
+        tags: ['controller.service_arguments']
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+    App\Controller\TaigaWebhookController:
+        tags: ['controller.service_arguments']
+        arguments:
+            $taigaWebhookSecretKey: '%env(string:TAIGA_WEBHOOK_SECRET_KEY)%'
+
+    App\Taiga\V1\Model\UserModel:
+        factory:
+            - '@App\Taiga\V1\Endpoint\AuthenticationEndpoint'
+            - authenticate
+        arguments:
+            - '%env(string:TAIGA_USERNAME)%'
+            - '%env(string:TAIGA_PASSWORD)%'
+
+    App\Taiga\V1\TaigaInterface: '@App\Taiga\V1\Taiga'
+
+    App\EntityListener\SprintEntityListener:
+        tags:
+            - { name: doctrine.orm.entity_listener, lazy: true }
+
+    Symfony\Component\Serializer\Normalizer\DateTimeNormalizer:
+        arguments:
+            $defaultContext:
+                datetime_timezone: 'America/Sao_Paulo'
+
+    App\ApiPlatformExtension\:
+        resource: '../src/ApiPlatformExtension/'
+        tags:
+            - { name: api_platform.doctrine.orm.query_extension.collection }
+            - { name: api_platform.doctrine.orm.query_extension.item }
+
+    Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter: ~

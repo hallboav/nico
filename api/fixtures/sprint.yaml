@@ -1,0 +1,24 @@
+# https://github.com/fzaninotto/Faker#formatters
+
+App\Entity\Sprint:
+    sprint_1:
+        criado_em: <dateTimeBetween('-6 months', '-4 months')>
+        atualizado_em: <dateTimeBetween($criado_em, 'now')>
+        projeto: '@projeto_1'
+        taiga_id: 1
+        nome: <sentence()>
+        iniciada_em: <dateTimeBetween('-2 months', '-1 month')>
+        finalizada_em: <dateTimeBetween($iniciada_em, 'now')>
+        is_fechada: true
+        is_ativa: true
+
+    sprint_2:
+        criado_em: <dateTimeBetween('-6 months', '-4 months')>
+        atualizado_em: <dateTimeBetween($criado_em, 'now')>
+        projeto: '@projeto_1'
+        taiga_id: 2
+        nome: <sentence()>
+        iniciada_em: <dateTimeBetween('-2 months', '-1 month')>
+        finalizada_em: <dateTimeBetween($iniciada_em, 'now')>
+        is_fechada: false
+        is_ativa: false

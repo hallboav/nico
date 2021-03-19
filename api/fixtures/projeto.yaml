@@ -1,0 +1,10 @@
+# https://github.com/fzaninotto/Faker#formatters
+
+App\Entity\Projeto:
+    projeto_1:
+        criado_em: <dateTimeBetween('-6 months', '-4 months')>
+        atualizado_em: <dateTimeBetween($criado_em, 'now')>
+        ordem_servico: '@ordem_servico_1'
+        taiga_id: 1
+        nome: <sentence()>
+        descricao: <text(255)>

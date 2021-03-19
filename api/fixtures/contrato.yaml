@@ -1,0 +1,10 @@
+# https://github.com/fzaninotto/Faker#formatters
+
+App\Entity\Contrato:
+    contrato_1:
+        criado_em: <dateTimeBetween('-6 months', '-4 months')>
+        atualizado_em: <dateTimeBetween($criado_em, 'now')>
+        nome: <sentence()>
+        cnpj: <pt_BR:cnpj(false)>
+        email: <email()>
+        nome_preposto: <name()>

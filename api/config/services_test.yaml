@@ -1,0 +1,4 @@
+services:
+    App\Taiga\V1\TaigaInterface:
+        alias: 'App\Taiga\V1\MockTaiga'
+        public: true

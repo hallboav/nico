@@ -1,0 +1,6 @@
+lexik_jwt_authentication:
+    secret_key: '%env(JWT_SECRET_KEY)%'
+    public_key: ''
+    token_ttl: 72000 # 20 horas
+    encoder:
+        signature_algorithm: HS384 # HMAC 384

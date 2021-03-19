@@ -1,0 +1,4 @@
+opcache.validate_timestamps=0
+apc.enable_cli=1
+opcache.preload=/app/config/preload.php
+opcache.preload_user=www-data

@@ -1,0 +1,8 @@
+# https://github.com/fzaninotto/Faker#formatters
+
+App\Entity\OrdemServico:
+    ordem_servico_1:
+        criado_em: <dateTimeBetween('-6 months', '-4 months')>
+        atualizado_em: <dateTimeBetween($criado_em, 'now')>
+        contrato: '@contrato_1'
+        taiga_tag: <word()>
